@@ -1,11 +1,11 @@
 import React from "react";
-import Webcam from "react-webcam";
 import "./App.css";
+import WebcamVideo from "./WebcamVideo";
 
 function App() {
   return (
     <div className="App">
-      <Webcam mirrored={true} />
+      <WebcamVideo />
     </div>
   );
 }
