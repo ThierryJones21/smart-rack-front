@@ -1,12 +1,11 @@
 import React, { useCallback, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import DelayButton from './DelayButton';
 
 export default function WebcamVideo() {
   const webcamRef = useRef(null);
   const mediaRecorderRef = useRef(null);
-  const [recordedChunks, setRecordedChunks] = useState([]);
   const [capturing, setCapturing] = useState(false);
+  const [recordedChunks, setRecordedChunks] = useState([]);
 
   const handleDataAvailable = useCallback(
     ({ data }) => {
@@ -67,13 +66,11 @@ export default function WebcamVideo() {
         ref={webcamRef}
         videoConstraints={videoConstraints}
       />
-
-      <DelayButton
-        onBeginSet={handleStartCaptureClick}
-        onSetComplete={handleStopCaptureClick}
-      >
-        Start Capture
-      </DelayButton>
+      {capturing ? (
+        <button onClick={handleStopCaptureClick}>Stop Capture</button>
+      ) : (
+        <button onClick={handleStartCaptureClick}>Start Capture</button>
+      )}
       {recordedChunks.length > 0 && (
         <button onClick={handleDownload}>Download</button>
       )}
