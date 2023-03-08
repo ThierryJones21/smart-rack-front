@@ -1,5 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
+import { DelayedButton } from './DelayedButton';
 
 export default function WebcamVideo() {
   const webcamRef = useRef(null);
@@ -66,11 +67,11 @@ export default function WebcamVideo() {
         ref={webcamRef}
         videoConstraints={videoConstraints}
       />
-      {capturing ? (
-        <button onClick={handleStopCaptureClick}>Stop Capture</button>
-      ) : (
-        <button onClick={handleStartCaptureClick}>Start Capture</button>
-      )}
+      {capturing && <h1>Capture in progress...</h1>}
+      <DelayedButton
+        firstAction={handleStartCaptureClick}
+        secondAction={handleStopCaptureClick}
+      />
       {recordedChunks.length > 0 && (
         <button onClick={handleDownload}>Download</button>
       )}
