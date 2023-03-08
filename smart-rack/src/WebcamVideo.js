@@ -1,16 +1,17 @@
-import React, { useCallback, useRef, useState } from "react";
-import Webcam from "react-webcam";
+import React, { useCallback, useRef, useState } from 'react';
+import Webcam from 'react-webcam';
+import DelayButton from './DelayButton';
 
 export default function WebcamVideo() {
   const webcamRef = useRef(null);
   const mediaRecorderRef = useRef(null);
-  const [capturing, setCapturing] = useState(false);
   const [recordedChunks, setRecordedChunks] = useState([]);
+  const [capturing, setCapturing] = useState(false);
 
   const handleDataAvailable = useCallback(
     ({ data }) => {
       if (data.size > 0) {
-        setRecordedChunks((prev) => prev.concat(data));
+        setRecordedChunks(prev => prev.concat(data));
       }
     },
     [setRecordedChunks]
@@ -19,10 +20,10 @@ export default function WebcamVideo() {
   const handleStartCaptureClick = useCallback(() => {
     setCapturing(true);
     mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
-      mimeType: "video/webm",
+      mimeType: 'video/webm',
     });
     mediaRecorderRef.current.addEventListener(
-      "dataavailable",
+      'dataavailable',
       handleDataAvailable
     );
     mediaRecorderRef.current.start();
@@ -36,14 +37,14 @@ export default function WebcamVideo() {
   const handleDownload = useCallback(() => {
     if (recordedChunks.length) {
       const blob = new Blob(recordedChunks, {
-        type: "video/webm",
+        type: 'video/webm',
       });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
+      const a = document.createElement('a');
       document.body.appendChild(a);
-      a.style = "display: none";
+      a.style = 'display: none';
       a.href = url;
-      a.download = "react-webcam-stream-capture.webm";
+      a.download = 'react-webcam-stream-capture.webm';
       a.click();
       window.URL.revokeObjectURL(url);
       setRecordedChunks([]);
@@ -53,11 +54,11 @@ export default function WebcamVideo() {
   const videoConstraints = {
     width: 1920,
     height: 1080,
-    facingMode: "user",
+    facingMode: 'user',
   };
 
   return (
-    <div className="Container">
+    <div className='Container'>
       <Webcam
         height={720}
         width={1280}
@@ -66,11 +67,13 @@ export default function WebcamVideo() {
         ref={webcamRef}
         videoConstraints={videoConstraints}
       />
-      {capturing ? (
-        <button onClick={handleStopCaptureClick}>Stop Capture</button>
-      ) : (
-        <button onClick={handleStartCaptureClick}>Start Capture</button>
-      )}
+
+      <DelayButton
+        onBeginSet={handleStartCaptureClick}
+        onSetComplete={handleStopCaptureClick}
+      >
+        Start Capture
+      </DelayButton>
       {recordedChunks.length > 0 && (
         <button onClick={handleDownload}>Download</button>
       )}
