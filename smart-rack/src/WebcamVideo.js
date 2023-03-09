@@ -1,6 +1,8 @@
 import React, { useCallback, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import { DelayedButton } from './DelayedButton';
+import Button from '@mui/material/Button';
+import { Typography } from '@mui/material';
 
 export default function WebcamVideo() {
   const webcamRef = useRef(null);
@@ -44,7 +46,7 @@ export default function WebcamVideo() {
       document.body.appendChild(a);
       a.style = 'display: none';
       a.href = url;
-      a.download = 'react-webcam-stream-capture.webm';
+      a.download = 'squat-evaluation.webm';
       a.click();
       window.URL.revokeObjectURL(url);
       setRecordedChunks([]);
@@ -57,6 +59,10 @@ export default function WebcamVideo() {
     facingMode: 'user',
   };
 
+  if(recordedChunks.length > 0) {
+    handleDownload();
+  }
+
   return (
     <div className='Container'>
       <Webcam
@@ -67,14 +73,11 @@ export default function WebcamVideo() {
         ref={webcamRef}
         videoConstraints={videoConstraints}
       />
-      {capturing && <h1>Capture in progress...</h1>}
+      {capturing && <Typography>Capture in progress...</Typography>}
       <DelayedButton
         firstAction={handleStartCaptureClick}
         secondAction={handleStopCaptureClick}
       />
-      {recordedChunks.length > 0 && (
-        <button onClick={handleDownload}>Download</button>
-      )}
     </div>
   );
 }
