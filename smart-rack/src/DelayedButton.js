@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import Button from '@mui/material/Button';
 
+/* This component adds a delay before clicking it to give the user time to set up */
+/* After 10 seconds of recording it stops */
 export function DelayedButton({ firstAction, secondAction }) {
   const [waiting, setWaiting] = useState(false);
   const timeoutRef = useRef(null);

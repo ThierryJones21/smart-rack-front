@@ -1,9 +1,9 @@
 import React, { useCallback, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import { DelayedButton } from './DelayedButton';
-import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
 
+/* This component is the core of the front end. It uses the webcam of any device to record video */
 export default function WebcamVideo() {
   const webcamRef = useRef(null);
   const mediaRecorderRef = useRef(null);
@@ -59,10 +59,6 @@ export default function WebcamVideo() {
     facingMode: 'user',
   };
 
-  if(recordedChunks.length > 0) {
-    handleDownload();
-  }
-
   return (
     <div className='Container'>
       <Webcam
@@ -78,6 +74,9 @@ export default function WebcamVideo() {
         firstAction={handleStartCaptureClick}
         secondAction={handleStopCaptureClick}
       />
+      {recordedChunks.length > 0 && (
+        <button onClick={handleDownload}>Download</button>
+      )}
     </div>
   );
 }
