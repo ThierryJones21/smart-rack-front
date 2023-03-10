@@ -13,12 +13,10 @@ pathSquatFromBack = 'videos/squat/TYuYICQ8HwY(Clip).mp4'
 baseline = "Squat_side_view_test.mp4"
 relative_path = "C:/Users/jones/OneDrive - Queen's University/4th Year/ELEC498 Capstone/Code/"
 
-
-
 deepestLegBend = 180
 deepestTorsoBend = 180
 max_shoulder_disp = 0
-max_knee_disp =0
+max_knee_disp = 0
 
 def calculate_angle(a,b,c):
     a = np.array(a) # First
@@ -78,20 +76,20 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
             if(angleLeftHipKneeAnkle < deepestLegBend and angleLeftHipKneeAnkle > 20):
                 deepestLegBend  = angleLeftHipKneeAnkle
             elif(angleRightHipKneeAnkle < deepestLegBend and angleRightHipKneeAnkle > 20):
-                deepestLegBend  = angleRightHipKneeAnkle  
+                deepestLegBend  = angleRightHipKneeAnkle
             #print("Deepest leg bend:" + str(deepestLegBend))     
             
 
             if(angleLeftShoulderHip < deepestTorsoBend and angleLeftShoulderHip > 20):
                 deepestTorsoBend  = angleLeftShoulderHip
             elif(angleRightShoulderHip < deepestTorsoBend and angleRightShoulderHip > 20):
-                deepestTorsoBend  = angleRightShoulderHip                
+                deepestTorsoBend  = angleRightShoulderHip
             # print("Deepest torso bend:" + str(deepestTorsoBend))
              
             if(angleLeftShoulderHip < deepestTorsoBend and angleLeftShoulderHip > 20):
                 deepestTorsoBend  = angleLeftShoulderHip
             elif(angleRightShoulderHip < deepestTorsoBend and angleRightShoulderHip > 20):
-                deepestTorsoBend  = angleRightShoulderHip  
+                deepestTorsoBend  = angleRightShoulderHip
 
             print("Left Shoulder" + str(shoulderLeft[1]) )
             print("Right Shoulder" + str(shoulderRight[1]) )
@@ -102,10 +100,10 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
             if((shoulderRight[1]- shoulderLeft[1]) > max_shoulder_disp):
                 max_shoulder_disp = shoulderRight[1]- shoulderLeft[1]
 
-            #calculate y greatest displacement in shoulder joints at a certain time 
+            #calculate y greatest displacement in shoulder joints at a certain time
             # only do inwardsonly do inwardsonly do inwardsonly do inwards
             if((kneeLeft[0]- kneeRight[0]) > max_knee_disp):
-                max_knee_disp = kneeLeft[0]- kneeRight[0]
+                max_knee_disp = kneeLeft[0] - kneeRight[0]
 
             if((kneeRight[0] - kneeLeft[0]) > max_knee_disp):
                 max_knee_disp = kneeRight[0] - kneeLeft[0]
