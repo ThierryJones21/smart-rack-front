@@ -1,9 +1,9 @@
 import React, { useCallback, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import { DelayedButton } from './DelayedButton';
-import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
 
+/* This component is the core of the front end. It uses the webcam of any device to record video */
 export default function WebcamVideo() {
   const webcamRef = useRef(null);
   const mediaRecorderRef = useRef(null);
