@@ -59,10 +59,6 @@ export default function WebcamVideo() {
     facingMode: 'user',
   };
 
-  if(recordedChunks.length > 0) {
-    handleDownload();
-  }
-
   return (
     <div className='Container'>
       <Webcam
@@ -78,6 +74,9 @@ export default function WebcamVideo() {
         firstAction={handleStartCaptureClick}
         secondAction={handleStopCaptureClick}
       />
+      {recordedChunks.length > 0 && (
+        <button onClick={handleDownload}>Download</button>
+      )}
     </div>
   );
 }
